@@ -3,7 +3,7 @@ url: https://raw.githubusercontent.com/api-evangelist/lastpass/refs/heads/main/a
 name: LastPass
 x-type: company
 description: >-
-  LastPass is a password manager offering personal and enterprise vaults, single sign-on, and provisioning. The LastPass Enterprise API exposes user provisioning, group management, and reporting.
+  LastPass is a password and identity-management platform offering personal and enterprise vaults, single sign-on, multi-factor authentication, and directory provisioning. The LastPass Enterprise API and Provisioning API let admins programmatically manage users, groups, shared folders, policies, and events. SCIM and SAML endpoints integrate with identity providers; an MFA SDK supports adaptive authentication for custom apps.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - Security
@@ -11,13 +11,111 @@ tags:
   - Vault
   - Identity
   - Enterprise
+  - SSO
+  - MFA
 created: '2026-05-08'
 modified: '2026-05-08'
 specificationVersion: '0.19'
-apis: []
+apis:
+  - aid: lastpass:enterprise-api
+    name: LastPass Enterprise API
+    description: >-
+      Single POST endpoint at lastpass.com/enterpriseapi.php that accepts a JSON
+      payload selecting one of many command names (batchadd, batchchange, deluser,
+      disableuser, getuserdata, getsfdata, getreport, etc.). Authenticated with the
+      enterprise customer ID (cid) and provisioning hash (provhash). Used for user
+      provisioning, group management, shared-folder reporting, and audit-event export.
+    humanURL: https://support.lastpass.com/help/use-the-lastpass-enterprise-api
+    baseURL: https://lastpass.com/enterpriseapi.php
+    tags:
+      - Enterprise API
+      - Provisioning
+      - Reporting
+    properties:
+      - type: Documentation
+        url: https://support.lastpass.com/help/use-the-lastpass-enterprise-api
+  - aid: lastpass:provisioning
+    name: LastPass Provisioning API
+    description: >-
+      Subset of the Enterprise API focused on the user-lifecycle commands - batchadd,
+      batchchange, deluser, disableuser, and getuserdata - used by directory connectors
+      (Active Directory, Entra ID, Okta, Google Workspace) to keep LastPass user state
+      aligned with the source-of-truth directory.
+    humanURL: https://support.lastpass.com/help/lastpass-provisioning-api
+    baseURL: https://lastpass.com/enterpriseapi.php
+    tags:
+      - Provisioning
+      - Directory Sync
+    properties:
+      - type: Documentation
+        url: https://support.lastpass.com/help/lastpass-provisioning-api
+  - aid: lastpass:scim
+    name: LastPass SCIM API
+    description: >-
+      SCIM 2.0 endpoint that exposes Users and Groups for directory-based
+      provisioning by Okta, Entra ID, OneLogin, JumpCloud, and Google Cloud Identity.
+      Replaces ad-hoc provisioning calls with a standards-compliant flow.
+    humanURL: https://support.lastpass.com/help/lastpass-scim-provisioning
+    baseURL: https://scim.lastpass.com/scim/v2
+    tags:
+      - SCIM
+      - Provisioning
+      - Identity
+    properties:
+      - type: Documentation
+        url: https://support.lastpass.com/help/lastpass-scim-provisioning
+  - aid: lastpass:saml
+    name: LastPass SAML / SSO Endpoint
+    description: >-
+      LastPass acts as either a SAML identity provider (IdP) for the cloud apps
+      catalogued in the LastPass App Library or as a service provider (SP) when paired
+      with an external IdP. Endpoints implement SAML 2.0 SSO, single logout, and
+      metadata exchange.
+    humanURL: https://support.lastpass.com/help/sso-with-lastpass
+    baseURL: https://identity.lastpass.com/saml
+    tags:
+      - SAML
+      - SSO
+      - Identity
+    properties:
+      - type: Documentation
+        url: https://support.lastpass.com/help/sso-with-lastpass
+  - aid: lastpass:mfa-sdk
+    name: LastPass MFA SDK
+    description: >-
+      Server-side SDK for embedding LastPass MFA (push, biometric, TOTP) into custom
+      cloud or on-prem applications. Wraps the underlying authentication endpoints so
+      developers can add adaptive multi-factor authentication without standing up an
+      OIDC layer.
+    humanURL: https://support.lastpass.com/help/lastpass-mfa-sdk
+    baseURL: https://identity.lastpass.com
+    tags:
+      - MFA
+      - SDK
+      - Authentication
+    properties:
+      - type: Documentation
+        url: https://support.lastpass.com/help/lastpass-mfa-sdk
+  - aid: lastpass:reporting
+    name: LastPass Reporting Commands
+    description: >-
+      Reporting-oriented Enterprise API commands (getreport, getuserdata, getsfdata,
+      getevents) that export login activity, shared-folder membership, and admin
+      events for use in SIEMs and audit pipelines.
+    humanURL: https://support.lastpass.com/help/use-the-lastpass-enterprise-api
+    baseURL: https://lastpass.com/enterpriseapi.php
+    tags:
+      - Reporting
+      - Audit Logs
+      - Compliance
+    properties:
+      - type: Documentation
+        url: https://support.lastpass.com/help/use-the-lastpass-enterprise-api
 common:
   - type: Website
     url: https://www.lastpass.com/
+  - type: Documentation
+    url: https://support.lastpass.com/help/use-the-lastpass-enterprise-api
   - type: Plans
     url: plans/lastpass-plans-pricing.yml
   - type: RateLimits

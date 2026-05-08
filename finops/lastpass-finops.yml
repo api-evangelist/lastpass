@@ -5,63 +5,96 @@ provider: LastPass
 providerId: lastpass
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
-- Security
-- Password Manager
-- Vault
-- Identity
-- Enterprise
-- FinOps
-- Cost Management
-- FOCUS
-description: FOCUS-aligned FinOps placeholder for LastPass. Pipeline will replace with the provider's
-  real billing-model details once researched.
-notes: Initial scaffold — billing model has not yet been reconciled.
+  - Security
+  - Password Manager
+  - Vault
+  - Identity
+  - Enterprise
+  - FinOps
+  - FOCUS
+description: >-
+  FOCUS-aligned FinOps for LastPass. Cost is dominated by per-user-per-month
+  subscriptions (Teams, Business, MFA, Identity bundles); the Enterprise API and SCIM
+  endpoint themselves are not metered separately. Personal plans bill annually with a
+  small monthly equivalent. Add-ons stack as separate per-user lines (MFA, advanced
+  reporting). Optimization levers are seat hygiene (offboarding inactive users) and
+  bundle selection (Identity vs. Business + MFA add-on).
 sources:
-- https://www.lastpass.com/
-- https://focus.finops.org/focus-specification/v1-3/
+  - https://www.lastpass.com/pricing
+  - https://support.lastpass.com/help/use-the-lastpass-enterprise-api
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
   dataSpec: FOCUS
   dataSpecVersion: '1.3'
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
-publisherName: LastPass
-serviceCategory: Security
+publisherName: LastPass US LP
+serviceCategory: Identity and Access Management
 billingModel:
-  pricingCategory: To Be Reconciled
-  billingFrequency: Monthly
+  pricingCategory: Subscription (Per User) + Optional Add-Ons
+  billingFrequency: Monthly or Annual
   billingCurrency: USD
   chargeCategories:
-  - Usage
-  - Purchase
-  - Adjustment
+    - Purchase
+    - Adjustment
+    - Tax
+    - Credit
 focusColumns:
   ServiceName: LastPass
-  ServiceCategory: Security
+  ServiceCategory: Identity and Access Management
   ProviderName: LastPass
-  PublisherName: LastPass
-  InvoiceIssuerName: LastPass
+  PublisherName: LastPass US LP
+  InvoiceIssuerName: LastPass US LP
   BillingCurrency: USD
-  ChargeCategory: Usage
+  ChargeCategory: Purchase
 meters:
-- name: api_usage
-  description: Catch-all meter pending reconciliation against the provider's published metering.
-  unit: varies
-  aggregation: sum
-  dimensions:
-  - account
-  - resource
+  - name: subscription_fee_per_user
+    description: >-
+      Recurring per-user subscription for the active business tier (Teams, Business,
+      Identity bundle) or the personal subscription line (Premium, Families).
+    unit: user_month
+    aggregation: sum
+    dimensions:
+      - plan_tier
+      - billing_cycle
+  - name: mfa_addon_fee
+    description: >-
+      Per-user-per-month subscription for the MFA add-on layered on top of Teams or
+      Business.
+    unit: user_month
+    aggregation: sum
+    dimensions:
+      - plan_tier
+  - name: storage
+    description: >-
+      Encrypted file storage consumed across vaults; bundled per-user GB included by
+      tier.
+    unit: GB
+    aggregation: max
+    dimensions:
+      - organization_id
 principles:
-- name: Visibility
-  description: Pull provider invoices or usage exports until a self-serve usage feed is documented.
-- name: Allocation
-  description: Tag invoice line items to consuming business units in your FinOps store.
-- name: Optimization
-  description: Levers depend on the provider's billing model; review at renewal once reconciled.
-- name: Accountability
-  description: Assign a contract owner to review billing against negotiated terms.
+  - name: Visibility
+    description: >-
+      Use the Enterprise API getuserdata, getsfdata, and getreport commands to track
+      user counts and login activity, and feed those into seat reconciliation. Map
+      directory connector / SCIM events to expected on/offboarding cadence.
+  - name: Allocation
+    description: >-
+      Map LastPass groups to business units. Use SCIM groups to enforce the mapping
+      so the per-user bill stays tied to HR truth.
+  - name: Optimization
+    description: >-
+      Disable rather than delete inactive users to free seats while keeping audit
+      history. Compare the Identity bundle price against (Business + MFA add-on) to
+      pick the cheaper assembly. Avoid double-paying when an external IdP already
+      provides MFA.
+  - name: Accountability
+    description: >-
+      Assign an IT or security owner per LastPass company. Review seat utilisation
+      monthly via getuserdata exports and renegotiate add-on inclusion at renewal.
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com

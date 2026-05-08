@@ -7,30 +7,68 @@ created: '2026-05-08'
 modified: '2026-05-08'
 reconciled: false
 tags:
-- Security
-- Password Manager
-- Vault
-- Identity
-- Enterprise
-- Rate Limiting
-- Quotas
-- Throttling
-description: Placeholder rate-limit artifact for LastPass. Replace with real limits once the pipeline
-  researches the provider's rate-limit documentation.
-notes: Initial scaffold — limits have not yet been reconciled against the provider's documentation.
+  - Security
+  - Password Manager
+  - Vault
+  - Identity
+  - Enterprise
+  - Rate Limiting
+  - Throttling
+description: >-
+  LastPass throttles abusive Enterprise API traffic and protects authentication
+  endpoints with adaptive rate limiting (failed-login backoff, captcha, account
+  lockout). Per-second numeric ceilings for the Enterprise API are not exhaustively
+  published; LastPass guidance is to batch user-management commands (batchadd,
+  batchchange) instead of single-user calls and to use the SCIM endpoint for ongoing
+  directory sync. Reconciliation against a published numeric ceiling pending - confirm
+  with LastPass support for high-volume integrations.
 sources:
-- https://www.lastpass.com/
+  - https://support.lastpass.com/help/use-the-lastpass-enterprise-api
+  - https://support.lastpass.com/help/lastpass-scim-provisioning
 responseCodes:
   throttled: 429
+  unauthorized: 401
 limits:
-- name: Default
-  scope: account
-  metric: varies
-  limit: see provider documentation
-  notes: Pending reconciliation.
+  - name: Enterprise API Throttle
+    scope: customer
+    metric: requests
+    limit: dynamic
+    timeFrame: minute
+    notes: >-
+      Dynamic throttle applied per enterprise customer (cid). Numeric ceiling not
+      published; sustained excessive request volume can trigger temporary block.
+  - name: Authentication Endpoint Throttle
+    scope: account
+    metric: failed_logins
+    limit: adaptive
+    notes: >-
+      Failed authentication is met with progressive backoff, captcha, and eventual
+      lockout. Applies to user logins, not the Enterprise API itself.
+  - name: SCIM Provisioning
+    scope: tenant
+    metric: requests
+    limit: dynamic
+    timeFrame: minute
+    notes: >-
+      The SCIM endpoint applies its own dynamic throttle suited to directory-sync
+      patterns from Okta, Entra ID, and Google Workspace.
 policies:
-- name: Backoff Strategy
-  description: Clients should implement exponential backoff with jitter and honor any Retry-After header.
+  - name: 429 Throttling
+    description: >-
+      The Enterprise API returns 429 / generic error on excessive throughput. Clients
+      should back off before retrying.
+  - name: Batch Operations
+    description: >-
+      Use batchadd, batchchange, and other batch commands rather than per-user calls
+      to reduce request volume.
+  - name: Prefer SCIM For Directory Sync
+    description: >-
+      Use the SCIM 2.0 endpoint for ongoing directory provisioning; it is built for
+      sustained sync patterns and integrates natively with major identity providers.
+  - name: Backoff Strategy
+    description: >-
+      Implement exponential backoff with jitter on 429/5xx responses; cache reporting
+      results where the underlying data is not changing rapidly.
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com

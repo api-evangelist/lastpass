@@ -7,36 +7,232 @@ created: '2026-05-08'
 modified: '2026-05-08'
 reconciled: false
 tags:
-- Security
-- Password Manager
-- Vault
-- Identity
-- Enterprise
-- Plans
-description: Placeholder plans/pricing artifact for LastPass. Replace with real published pricing once
-  the pipeline researches the provider's plans page.
-notes: Initial scaffold — plans/pricing have not yet been reconciled against the provider's documentation.
+  - Security
+  - Password Manager
+  - Vault
+  - Identity
+  - Enterprise
+  - Plans
+description: >-
+  LastPass sells three personal tiers (Free, Premium, Families) and three primary
+  business tiers (Teams, Business, plus optional MFA and Identity add-ons). API access
+  is gated to Teams and above (Enterprise API + SCIM endpoint). Personal plans bill
+  annually with a small monthly equivalent. Pricing levels below were captured from
+  publicly-cited LastPass tier pricing and may move - confirm against
+  www.lastpass.com/pricing before quoting.
 sources:
-- https://www.lastpass.com/
+  - https://www.lastpass.com/pricing
+  - https://support.lastpass.com/help/use-the-lastpass-enterprise-api
 plans:
-- id: lastpass-default
-  name: To Be Reconciled
-  type: enterprise
-  description: Initial scaffold; replace with provider plan tiers (Free / Pro / Enterprise / pay-as-you-go,
-    etc.) once pricing is reconciled.
-  entries:
-  - label: API Access
-    name: api_access
-    type: flat
-    metric: varies
-    limit: -1
-    timeFrame: usage
-    geo: global
-    unit: 1
-    price: see https://www.lastpass.com/
-    userMultiplied: false
-  elements:
-  - name: Pending Reconciliation
+  - id: lastpass-free
+    name: Free
+    type: freemium
+    description: >-
+      Personal Free tier. One device type at a time (computer or mobile), unlimited
+      passwords, password generator, basic MFA, secure notes. No API access.
+    entries:
+      - label: Monthly Subscription
+        name: subscription
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+      - label: API Access
+        name: api_access
+        type: flat
+        metric: requests
+        limit: 0
+        timeFrame: month
+        unit: 1
+        price: not available
+        userMultiplied: false
+    elements:
+      - name: Unlimited Passwords
+      - name: One Device Type
+      - name: Password Generator
+      - name: Basic Multi-Factor Authentication
+  - id: lastpass-premium
+    name: Premium
+    type: subscription
+    description: >-
+      Personal Premium tier. Multi-device sync, 1 GB encrypted file storage, advanced
+      MFA, dark-web monitoring, emergency access, security dashboard. No API access.
+    entries:
+      - label: Monthly Subscription
+        name: subscription
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: '$3'
+        userMultiplied: false
+    elements:
+      - name: Multi-Device Sync
+      - name: 1 GB Encrypted File Storage
+      - name: Advanced MFA
+      - name: Dark Web Monitoring
+      - name: Emergency Access
+  - id: lastpass-families
+    name: Families
+    type: subscription
+    description: >-
+      Personal Families tier covering up to 6 individual Premium accounts plus a shared
+      family manager dashboard, unlimited shared folders, and personal-vault separation.
+    entries:
+      - label: Monthly Subscription
+        name: subscription
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: '$4'
+        userMultiplied: false
+      - label: Included Users
+        name: users
+        type: quota
+        metric: user
+        limit: 6
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+    elements:
+      - name: 6 Premium Accounts
+      - name: Family Manager Dashboard
+      - name: Unlimited Shared Folders
+  - id: lastpass-teams
+    name: Teams
+    type: subscription
+    description: >-
+      Business Teams tier (capped at 50 users). Per-user/month pricing. Includes a
+      basic admin console, shared folders, basic policies, password security report,
+      Enterprise API, and SCIM provisioning.
+    entries:
+      - label: Subscription Per User
+        name: subscription_per_user
+        type: subscription
+        metric: user_month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: '$4'
+        userMultiplied: true
+      - label: Maximum Users
+        name: max_users
+        type: quota
+        metric: user
+        limit: 50
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: API Access
+        name: api_access
+        type: included
+        metric: requests
+        limit: -1
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+    elements:
+      - name: Admin Console
+      - name: Shared Folders
+      - name: Enterprise API
+      - name: SCIM Provisioning
+      - name: Basic Policies
+      - name: Password Security Report
+  - id: lastpass-business
+    name: Business
+    type: subscription
+    description: >-
+      Business tier. Per-user/month pricing, unlimited users, full enterprise admin
+      console, advanced policies, SSO across the LastPass App Library (or external
+      IdPs), dark-web monitoring, advanced reporting, Enterprise API and SCIM, plus
+      add-on access to MFA SDK and the Identity bundle.
+    entries:
+      - label: Subscription Per User
+        name: subscription_per_user
+        type: subscription
+        metric: user_month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: '$7'
+        userMultiplied: true
+      - label: API Access
+        name: api_access
+        type: included
+        metric: requests
+        limit: -1
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+    elements:
+      - name: Unlimited Users
+      - name: Full Admin Console
+      - name: Advanced Policies (100+)
+      - name: SSO Apps
+      - name: Enterprise API
+      - name: SCIM Provisioning
+      - name: 24/7 Support
+  - id: lastpass-mfa-addon
+    name: MFA Add-On
+    type: add-on
+    description: >-
+      Adaptive multi-factor authentication add-on for Business / Teams. Adds passwordless
+      login, biometric MFA, and the MFA SDK for embedding factors in custom apps.
+    entries:
+      - label: Subscription Per User
+        name: subscription_per_user
+        type: subscription
+        metric: user_month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: '$3'
+        userMultiplied: true
+    elements:
+      - name: Push and Biometric MFA
+      - name: MFA SDK
+      - name: Adaptive Authentication
+  - id: lastpass-identity
+    name: Identity (Bundle)
+    type: subscription
+    description: >-
+      Identity bundle combining Business + MFA + SSO. Per-user/month pricing for
+      organizations standardising on LastPass for both password management and identity
+      provider.
+    entries:
+      - label: Subscription Per User
+        name: subscription_per_user
+        type: subscription
+        metric: user_month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: '$8'
+        userMultiplied: true
+      - label: API Access
+        name: api_access
+        type: included
+        metric: requests
+        limit: -1
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+    elements:
+      - name: Business Password Manager
+      - name: SSO (Unlimited Apps)
+      - name: MFA Across All Apps
+      - name: Adaptive Authentication
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
