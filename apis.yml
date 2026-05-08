@@ -1,0 +1,29 @@
+aid: lastpass
+url: https://raw.githubusercontent.com/api-evangelist/lastpass/refs/heads/main/apis.yml
+name: LastPass
+x-type: company
+description: >-
+  LastPass is a password manager offering personal and enterprise vaults, single sign-on, and provisioning. The LastPass Enterprise API exposes user provisioning, group management, and reporting.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Security
+  - Password Manager
+  - Vault
+  - Identity
+  - Enterprise
+created: '2026-05-08'
+modified: '2026-05-08'
+specificationVersion: '0.19'
+apis: []
+common:
+  - type: Website
+    url: https://www.lastpass.com/
+  - type: Plans
+    url: plans/lastpass-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/lastpass-rate-limits.yml
+  - type: FinOps
+    url: finops/lastpass-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
