@@ -1,7 +1,7 @@
 aid: lastpass
 url: https://raw.githubusercontent.com/api-evangelist/lastpass/refs/heads/main/apis.yml
 name: LastPass
-x-type: company
+kind: company
 description: >-
   LastPass is a password and identity-management platform offering personal and enterprise vaults, single sign-on, multi-factor authentication, and directory provisioning. The LastPass Enterprise API and Provisioning API let admins programmatically manage users, groups, shared folders, policies, and events. SCIM and SAML endpoints integrate with identity providers; an MFA SDK supports adaptive authentication for custom apps.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
