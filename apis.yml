@@ -112,6 +112,10 @@ apis:
       - type: Documentation
         url: https://support.lastpass.com/help/use-the-lastpass-enterprise-api
 common:
+  - type: GitHubOrganization
+    url: https://github.com/lastpass
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/lastpass
   - type: Website
     url: https://www.lastpass.com/
   - type: Documentation
