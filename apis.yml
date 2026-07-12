@@ -112,6 +112,8 @@ apis:
       - type: Documentation
         url: https://support.lastpass.com/help/use-the-lastpass-enterprise-api
 common:
+  - type: DomainSecurity
+    url: security/lastpass-domain-security.yml
   - type: GitHubOrganization
     url: https://github.com/lastpass
   - type: LinkedIn
@@ -126,6 +128,8 @@ common:
     url: rate-limits/lastpass-rate-limits.yml
   - type: FinOps
     url: finops/lastpass-finops.yml
+  - type: Blog
+    url: https://blog.lastpass.com/
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
