@@ -4,7 +4,19 @@ name: LastPass
 kind: company
 description: >-
   LastPass is a password and identity-management platform offering personal and enterprise vaults, single sign-on, multi-factor authentication, and directory provisioning. The LastPass Enterprise API and Provisioning API let admins programmatically manage users, groups, shared folders, policies, and events. SCIM and SAML endpoints integrate with identity providers; an MFA SDK supports adaptive authentication for custom apps.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/lastpass.png
 tags:
   - Security
   - Password Manager
