@@ -239,3 +239,75 @@ plans:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - seat
+  - subscription
+  units:
+  - period
+  - request
+  - seat
+  plans:
+  - name: Free
+    access: freemium
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    - request
+    periods:
+    - month
+  - name: Premium
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - period
+    periods:
+    - month
+  - name: Families
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - period
+    - seat
+    periods:
+    - month
+  - name: Teams
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - request
+    - seat
+    periods:
+    - month
+  - name: Business
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - request
+    - seat
+    periods:
+    - month
+  - name: MFA Add-On
+    access: addon
+    model: seat
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Identity (Bundle)
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - request
+    - seat
+    periods:
+    - month
