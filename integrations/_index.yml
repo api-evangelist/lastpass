@@ -67,3 +67,74 @@
     builder: Pipedream repo (component)
   status: not-a-workflow
   arazzo: null
+- slug: lastpass-homebrew
+  label: Homebrew
+  partner: homebrew
+  partner_name: Homebrew
+  category: official CLI (Homebrew)
+  type: register
+  channel: package-registry
+  evidence: https://formulae.brew.sh/formula/lastpass-cli
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Homebrew (public package index)
+    spec_file: null
+    packages:
+    - name: lastpass-cli
+      kind: formula
+      version: 1.6.2
+      released: null
+      lapsed: false
+      page: https://formulae.brew.sh/formula/lastpass-cli
+      cli: 'formula desc: LastPass command-line interface tool'
+      repo_leg: github-org:lastpass
+      publisher_leg: artifact-github-org:lastpass
+      matched_by: github-org
+    current: true
+    signal_note: 'the provider''s own command-line tool on a package manager: distribution, not an integration;
+      lapsed = no release in 24 months or deprecated / disabled by the manager'
+    detected_by: sweep-official-clis.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: lastpass-app-defense-alliance-certified-products
+  label: App Defense Alliance certified products
+  partner_name: App Defense Alliance certified products
+  category: mobile app security certification
+  type: register
+  channel: standard-directory
+  evidence: https://cert.appdefensealliance.org/certifications/10157
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: App Defense Alliance certified products (cert.appdefensealliance.org/certifications)
+    standard: ADA Mobile Application Security Profile / OWASP MASVS (MASA)
+    spec_file: null
+    role: ada-certified-developer
+    registered_name: LastPass US LP
+    register_id: https://cert.appdefensealliance.org/certifications/10157
+    matched_domain: lastpass.com
+    matched_by: domain
+    domain_source: package id (reverse domain)
+    certified_products:
+    - product: Mobile application (ADA Mobile App Profile / MASA)
+      product_type: Mobile application (ADA Mobile App Profile / MASA)
+      certifier: App Defense Alliance (authorized lab + certification body)
+      example_product: LastPass Authenticator
+      example_certificate: https://cert.appdefensealliance.org/certifications/10157
+      assurance_levels: []
+      newest_expiry: '2026-12-22'
+      lapsed: false
+      lapsed_note: lapsed = no certificate of this type is Valid and unexpired today
+    products_sample:
+    - LastPass Authenticator
+    - LastPass Password Manager
+    labs:
+    - NCC Group
+    signal_note: certified_products = ONE entry per ADA product type (profile family), never per app or certificate;
+      labs are assessors (context, never linked)
+    detected_by: sweep-mobile-sdk-index.py
+    detected: '2026-10-21'
+  status: not-a-workflow
+  arazzo: null

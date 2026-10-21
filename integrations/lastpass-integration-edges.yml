@@ -1,17 +1,21 @@
 generated: '2026-10-14'
 method: searched
 checked:
+- https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
+- https://github.com/PipedreamHQ/pipedream/tree/d5872355ef27b4efa769f05352f2820c299a456e/components/
+- https://zapier.com/api/v4/apps/
+- okta/integrations/okta-integration-edges.yml
 - https://cdn.winget.microsoft.com/cache
 - https://formulae.brew.sh/api/cask.json
 - https://formulae.brew.sh/api/formula.json
-- https://github.com/PipedreamHQ/pipedream/tree/94800dd6de6640b942c65ea7ee655f71ac56d438/components/
-- https://github.com/PipedreamHQ/pipedream/tree/d5872355ef27b4efa769f05352f2820c299a456e/components/
 - https://github.com/ScoopInstaller/Extras
 - https://github.com/ScoopInstaller/Main
 - https://pypi.org/pypi
 - https://registry.npmjs.org
-- https://zapier.com/api/v4/apps/
-- okta/integrations/okta-integration-edges.yml
+- https://cdn.cocoapods.org/all_pods.txt
+- https://cert.appdefensealliance.org/certifications
+- https://play.google.com/sdks
+- https://search.maven.org/solrsearch/select
 source:
 - okta/integrations/okta-integration-edges.yml
 edges:
@@ -122,3 +126,43 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-official-clis.py
   first_seen: '2026-10-20'
+- partner_name: App Defense Alliance certified products
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://cert.appdefensealliance.org/certifications/10157
+  category: mobile app security certification
+  contract_reference:
+    register: App Defense Alliance certified products (cert.appdefensealliance.org/certifications)
+    standard: ADA Mobile Application Security Profile / OWASP MASVS (MASA)
+    spec_file: null
+    role: ada-certified-developer
+    registered_name: LastPass US LP
+    register_id: https://cert.appdefensealliance.org/certifications/10157
+    matched_domain: lastpass.com
+    matched_by: domain
+    domain_source: package id (reverse domain)
+    certified_products:
+    - product: Mobile application (ADA Mobile App Profile / MASA)
+      product_type: Mobile application (ADA Mobile App Profile / MASA)
+      certifier: App Defense Alliance (authorized lab + certification body)
+      example_product: LastPass Authenticator
+      example_certificate: https://cert.appdefensealliance.org/certifications/10157
+      assurance_levels: []
+      newest_expiry: '2026-12-22'
+      lapsed: false
+      lapsed_note: lapsed = no certificate of this type is Valid and unexpired today
+    products_sample:
+    - LastPass Authenticator
+    - LastPass Password Manager
+    labs:
+    - NCC Group
+    signal_note: certified_products = ONE entry per ADA product type (profile family), never per app or certificate;
+      labs are assessors (context, never linked)
+    detected_by: sweep-mobile-sdk-index.py
+    detected: '2026-10-21'
+  detected_by: sweep-mobile-sdk-index.py
+  first_seen: '2026-10-21'
