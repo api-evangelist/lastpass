@@ -1,4 +1,4 @@
-# LastPass (lastpass)
+# LastPass
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,60 +66,107 @@
 
 LastPass is a password and identity-management platform offering personal and enterprise vaults, single sign-on, multi-factor authentication, and directory provisioning. The LastPass Enterprise API and Provisioning API let admins programmatically manage users, groups, shared folders, policies, and events. SCIM and SAML endpoints integrate with identity providers; an MFA SDK supports adaptive authentication for custom apps.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/lastpass/refs/heads/main/apis.yml)
+**Areas:** Security · Password Manager · Vault · Identity · Enterprise · SSO · MFA · Identity Federation
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=lastpass-api-evangelist&utm_content=repo)
+## LastPass on APIs.io
 
-## Type
+Everything profiled for LastPass is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/lastpass/](https://apis.io/providers/lastpass/)** — or go straight to one of the APIs or properties below.
 
-- **x-type:** company
+### APIs (6)
 
-## Tags
+- [LastPass Enterprise API](https://apis.io/apis/lastpass/enterprise-api/) — Single POST endpoint at lastpass.com/enterpriseapi.php that accepts a JSON payload selecting one of many command names (batchadd, batchchange, deluser,…
+- [LastPass Provisioning API](https://apis.io/apis/lastpass/provisioning/) — Subset of the Enterprise API focused on the user-lifecycle commands - batchadd, batchchange, deluser, disableuser, and getuserdata - used by directory…
+- [LastPass SCIM API](https://apis.io/apis/lastpass/scim/) — SCIM 2.0 endpoint that exposes Users and Groups for directory-based provisioning by Okta, Entra ID, OneLogin, JumpCloud, and Google Cloud Identity. Replaces…
+- [LastPass SAML / SSO Endpoint](https://apis.io/apis/lastpass/saml/) — LastPass acts as either a SAML identity provider (IdP) for the cloud apps catalogued in the LastPass App Library or as a service provider (SP) when paired…
+- [LastPass MFA SDK](https://apis.io/apis/lastpass/mfa-sdk/) — Server-side SDK for embedding LastPass MFA (push, biometric, TOTP) into custom cloud or on-prem applications. Wraps the underlying authentication endpoints…
+- [LastPass Reporting Commands](https://apis.io/apis/lastpass/reporting/) — Reporting-oriented Enterprise API commands (getreport, getuserdata, getsfdata, getevents) that export login activity, shared-folder membership, and admin…
 
-- Security, Password Manager, Vault, Identity, Enterprise, SSO, MFA
+### Published properties
 
-## Timestamps
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- **Created:** 2026-05-08
-- **Modified:** 2026-05-08
+#### Security (1)
 
-## APIs
+Authentication, trust centre, and vulnerability disclosure.
 
-| API | Description |
-|---|---|
-| LastPass Enterprise API | Single POST endpoint at `enterpriseapi.php` taking command-style payloads (batchadd, batchchange, deluser, disableuser, getuserdata, getsfdata, getreport). |
-| LastPass Provisioning API | User-lifecycle subset of the Enterprise API used by directory connectors. |
-| LastPass SCIM API | SCIM 2.0 Users and Groups endpoint for Okta, Entra ID, OneLogin, Google Cloud Identity. |
-| LastPass SAML / SSO Endpoint | SAML 2.0 IdP and SP endpoints powering the LastPass App Library. |
-| LastPass MFA SDK | Server-side SDK for embedding push, biometric, and TOTP MFA in custom apps. |
-| LastPass Reporting Commands | Reporting subset of the Enterprise API (getreport, getevents, getuserdata, getsfdata). |
+- [Lastpass Domain Security](https://apis.io/security/lastpass/lastpass-domain-security/)
 
-## Common Properties
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Lastpass Plans Pricing](https://apis.io/plans/lastpass/lastpass-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Lastpass Rate Limits](https://apis.io/rate-limits/lastpass/lastpass-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Lastpass Finops](https://apis.io/finops/lastpass/lastpass-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.lastpass.com/)
 - [Documentation](https://support.lastpass.com/help/use-the-lastpass-enterprise-api)
-- [Plans](plans/lastpass-plans-pricing.yml) - API Commons Plans 0.1
-- [RateLimits](rate-limits/lastpass-rate-limits.yml) - API Commons Rate Limits 0.1
-- [FinOps](finops/lastpass-finops.yml) - FOCUS-aligned FinOps Framework 1.0
+- [Blog](https://blog.lastpass.com/)
+- [GitHub](https://github.com/lastpass)
 
-## Plans
+## API Evangelist rating
 
-- **Free** - Personal; single device type at a time; no API access.
-- **Premium** - $3/month; multi-device, dark-web monitoring, emergency access.
-- **Families** - $4/month for 6 users.
-- **Teams** - $4/user/month, capped at 50 users; Enterprise API and SCIM included.
-- **Business** - $7/user/month; unlimited users; advanced policies, SSO apps.
-- **MFA Add-On** - $3/user/month layered on Teams or Business.
-- **Identity Bundle** - $8/user/month; Business + MFA + SSO.
+**Kin Score 10.1** — minimal · rubric 0.24.0 · scored 2026-10-17
 
-## Rate Limits
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 0.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 7.1 |
+| Access clarity | 7.9 |
 
-- Dynamic per-customer throttle on the Enterprise API; sustained excessive volume can trigger temporary block.
-- Authentication endpoints apply adaptive backoff, captcha, and lockout on failed login.
-- Use batch commands and the SCIM endpoint instead of per-user calls for sync workloads.
+**Agent readiness 0.6** — human-only
 
-## Maintainers
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-**FN:** Kin Lane
+**Regulatory alignment 5.9** — Horizontal (data, software, accessibility, platform)
 
-**Email:** kin@apievangelist.com
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/lastpass/](https://apis.io/providers/lastpass/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for LastPass: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/lastpass/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
